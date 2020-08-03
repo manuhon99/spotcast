@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Slider } from 'react-native';
+import Slider from '@react-native-community/slider';
 import styled from 'styled-components/native';
 import { ChevronIcon } from '../components/icons/chevron';
 import { MoreVert } from '../components/icons/MoreVert';
@@ -164,7 +164,7 @@ export function PlayerScreen() {
                   minimumValue={0}
                   maximumValue={100}
                   value={segundos}
-                  onValueChange={(value) => setSeconds(value)}
+                  onValueChange={(value) => setSegundos(value)}
                 />
               <Controls.Slider.CurrentTime>
                 0:{segundos}
