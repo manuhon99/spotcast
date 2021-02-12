@@ -1,188 +1,193 @@
-import React, {useState} from 'react';
-import Slider from '@react-native-community/slider';
-import styled from 'styled-components/native';
-import { ChevronIcon } from '../components/icons/chevron';
-import { MoreVert } from '../components/icons/MoreVert';
+import { Slider } from 'react-native';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import styled from 'styled-components/native';
+import { ChevronIcon } from '../components/icons/Chevron';
+import { MoreVertIcon } from '../components/icons/MoreVert';
 import { PlayIcon } from '../components/icons/Play';
 
-
-const Background = ({ children }) => {
+const Background = ({children}) => {
     return (
-      <LinearGradient
-          colors={['#464769', '#1B1A1F']}
-          style={{
-            flex: 1,
-            paddingTop: 50,
-          }}>
-          {children}
-      </LinearGradient>
+        <LinearGradient
+            colors={['#464769', '#1B1A1F']}
+            style={{
+                flex: 1,
+            }}
+        >
+        {children}
+        </LinearGradient>
     );
-};
-  
+}
+
 const TopBar = styled.View`
-  flex-direction: row;
+    padding-top: 40px;
+    flex-direction: row;
 `;
 
 TopBar.Left = styled.View`
-  flex: 1;
-  padding-left: 16px;
-  /* background: red; */
-`;
-TopBar.Right = styled.View`
-  flex: 1;
-  padding-right: 16px;
-  align-items: flex-end;
-  /* background: green; */
+    flex: 1;
+    padding-left: 16px;
+    /* background-color: red; */
 `;
 TopBar.Middle = styled.View`
-  flex: 2;
-  align-items: center;
-  /* background: yellow; */
+    flex: 2;
+    align-items: center;
+    /* background-color: green; */
+`;
+TopBar.Right = styled.View`
+    flex: 1;
+    padding-right: 16px;
+    align-items: flex-end;
+    /* background-color: blue; */
 `;
 
 TopBar.Title = styled.Text`
-  color: white;
-  text-transform: uppercase;
+    color: white;
+    text-transform: uppercase;
 `;
+
 TopBar.SubTitle = styled.Text`
-  color: white;
-  font-weight: bold;
+    color: white;
+    font-weight: bold;
 `;
-
-// =====================
-
+// =====================================================================
 const ScreenArea = styled.View`
-  flex: 1;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-bottom: 32px;
-  padding-top: 32px;
+    flex: 1;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 16px;
 `;
 
 const CoverArea = styled.View`
-  flex: 4; 
+    /* background: red; */
+    flex: 4;
 `;
 
 CoverArea.Image = styled.Image`
-  width: 100%;
-  flex: 1;
+    width: 100%;
+    flex: 1;
 `;
 
 const PlayerArea = styled.View`
-  flex: 2; 
-  justify-content: flex-end;
+    /* background: blue; */
+    flex: 2;
+    justify-content: flex-end;
 `;
 
 PlayerArea.Title = styled.Text`
-  color: white;
-  font-size: 16px;
+    color: white;
+    font-size: 24px;
 `;
 
 PlayerArea.Author = styled.Text`
-  color: #BBBBBB;
-  font-size: 12px;
+    color: #bbbbbb;
+    font-size: 16px;
 `;
 
 const Controls = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 `;
 
 Controls.Play = styled.TouchableOpacity`
+    height: 72px;
+    width: 72px;
 `;
 
 Controls.Slider = styled.View`
-  flex-basis: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    flex-basis: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
+
+Controls.AudioSlider = styled(Slider)`
+    flex-basis: 100%;
 `;
 
 Controls.Slider.CurrentTime = styled.Text`
-  color: #bbbbbb;
+    color: #bbbbbb;
 `;
 
 Controls.Slider.TotalTime = styled.Text`
-  color: #bbbbbb;
+    color: #bbbbbb;
 `;
 
-const AudioSlider = styled(Slider)`
-  flex-basis: 100%;
-`;
-
-export function PlayerScreen() {
+export default function PlayerScreen() {
   const [segundos, setSegundos] = useState(0);
+
+  const playerTime = valor => {
+      let tempo = (valor.toString()).split('.').join(':');
+      return tempo;
+  }
 
   return (
     <Background>
-      <TopBar>
-        <TopBar.Left>
-          <ChevronIcon />
-        </TopBar.Left>
-        
-        <TopBar.Middle>
-          <TopBar.Title>
-            Tocando Podcast
-          </TopBar.Title>
-          <TopBar.SubTitle>
-            Hipsters Ponto Tech
-          </TopBar.SubTitle>
-        </TopBar.Middle>
+        <TopBar>
+            <TopBar.Left>
+                <ChevronIcon />
+            </TopBar.Left>
 
-        <TopBar.Right>
-          <MoreVert />
-        </TopBar.Right>
-      </TopBar>
+            <TopBar.Middle>
+                <TopBar.Title>
+                    Tocando Podcast
+                </TopBar.Title>
+                <TopBar.SubTitle>
+                    Nerdcast
+                </TopBar.SubTitle>
+            </TopBar.Middle>
 
-      <ScreenArea>
-        <CoverArea>
-          <CoverArea.Image
-            resizeMode="contain"
-            source={{
-              uri: "https://placehold.it/750x750",
-            }}
-          />
-        </CoverArea>
+            <TopBar.Right>
+                <MoreVertIcon />
+            </TopBar.Right>
+        </TopBar>
 
-        <PlayerArea>
-          <PlayerArea.Title>
-            Angular vs React - Hipsters #142
-          </PlayerArea.Title>
-          <PlayerArea.Author>
-          Hipsters Ponto Tech
-          </PlayerArea.Author>
-
-          <Controls>
-            <Controls.Slider>
-                <AudioSlider
-                  thumbTintColor="#ffffff"
-                  minimumTrackTintColor="#1dd65f"
-                  maximumTrackTintColor="#777777"
-                  minimumValue={0}
-                  maximumValue={100}
-                  value={segundos}
-                  onValueChange={(value) => setSegundos(value)}
+        <ScreenArea>
+            <CoverArea>
+                <CoverArea.Image 
+                    resizeMode="contain"
+                    source={{ uri: "https://jovemnerd.com.br/wp-content/uploads/2019/06/podcast_678_ipod-1400x1400.jpg", }}
                 />
-              <Controls.Slider.CurrentTime>
-                0:{segundos}
-              </Controls.Slider.CurrentTime>
-              <Controls.Slider.TotalTime>
-                52:07
-              </Controls.Slider.TotalTime>
-            </Controls.Slider>
+            </CoverArea>
 
-            <Controls.Play>
-                <PlayIcon
-                    width={88}
-                    height={88}
-                />
-            </Controls.Play>
-          </Controls>
-        </PlayerArea>
-      </ScreenArea>
+            <PlayerArea>
+                <PlayerArea.Title>
+                    Os Piores Crossovers 
+                </PlayerArea.Title>
+                <PlayerArea.Author>
+                    Nerdcast
+                </PlayerArea.Author>
+                <Controls>
+                    <Controls.AudioSlider
+                        thumbTintColor="#ffffff"
+                        minimumTrackTintColor="#1dd65f"
+                        maximumTrackTintColor="#777777"
+                        minimumValue={0.00}
+                        maximumValue={53.00}
+                        value={segundos}
+                        onValueChange={value => {
+                            setSegundos(Math.round(value*100)/100);
+                        }}
+                    />
+
+                    <Controls.Slider>
+                        <Controls.Slider.CurrentTime>
+                            {playerTime(segundos)}
+                        </Controls.Slider.CurrentTime>
+                        <Controls.Slider.TotalTime>
+                            53:00
+                        </Controls.Slider.TotalTime>
+                    </Controls.Slider>
+
+                    <Controls.Play>
+                        <PlayIcon />
+                    </Controls.Play>
+                </Controls>
+            </PlayerArea>
+        </ScreenArea>
+
     </Background>
   );
 }
